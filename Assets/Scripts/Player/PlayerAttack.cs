@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private WeaponData weaponData;
+    [SerializeField] private WeaponData pistolData;
+    [SerializeField] private WeaponData shotgunData;
+    [SerializeField] private WeaponData burstData;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
 
@@ -11,13 +14,39 @@ public class PlayerAttack : MonoBehaviour
     private float cooldownTimer;
     private float aimAngle;
 
+    // UI 표시용: 현재 선택된 무기 이름.
+    public string CurrentWeaponName => weaponData != null ? weaponData.weaponName : "-";
+
     private void Awake()
     {
         mainCamera = Camera.main;
+
+        // 시작 무기는 Pistol.
+        if (pistolData != null)
+        {
+            weaponData = pistolData;
+        }
     }
 
     private void Update()
     {
+        // 숫자키로 현재 무기(WeaponData 참조)만 교체한다. 발사 로직은 그대로.
+        if (Keyboard.current != null)
+        {
+            if (Keyboard.current.digit1Key.wasPressedThisFrame && pistolData != null)
+            {
+                weaponData = pistolData;
+            }
+            if (Keyboard.current.digit2Key.wasPressedThisFrame && shotgunData != null)
+            {
+                weaponData = shotgunData;
+            }
+            if (Keyboard.current.digit3Key.wasPressedThisFrame && burstData != null)
+            {
+                weaponData = burstData;
+            }
+        }
+
         if (Mouse.current == null)
         {
             return;

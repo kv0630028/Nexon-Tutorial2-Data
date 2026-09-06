@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a330a2393e4b6a142b2f55fa2adf096a, type: 3}
+  m_Name: BossEnemyData
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: Boss
+  maxHp: 500
+  moveSpeed: 1.5
+  attackDamage: 35
+  attackRange: 1
+  attackCooldown: 2
+  score: 1000
+  visualScale: 2.5
+  visualColor: {r: 0.6, g: 0, b: 0.8, a: 1}

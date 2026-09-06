@@ -1,37 +1,46 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    // 하나의 Wave 안에서 "어떤 EnemyData를 몇 마리" 스폰할지 정의하는 데이터.
-    [Serializable]
-    public class EnemySpawn
-    {
-        public EnemyData data;
-        public int count = 1;
-    }
-
-    // 한 Wave = EnemySpawn 목록. 종류 분기 없이 데이터 조합만으로 구성된다.
-    [Serializable]
-    public class Wave
-    {
-        public EnemySpawn[] spawns;
-    }
-
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private float spawnInterval = 0.4f;
     [SerializeField] private float delayBetweenWaves = 2f;
-    [SerializeField] private Wave[] waves;
+    [SerializeField] private WaveData[] waves;
 
     private int currentWaveIndex = 0;
     private int aliveEnemies = 0;
     private bool spawning = false;
     private bool advancing = false;
 
+    // 마지막 Wave까지 모두 클리어되면 1회 발생.
+    public event System.Action OnAllWavesCleared;
+
     private void Start()
     {
+        StartNextWave();
+    }
+
+    // 현재 진행 중인 Wave 번호(1-based). Save에서 읽는다.
+    public int CurrentWave => currentWaveIndex;
+
+    // Load 시 저장된 Wave부터 안전하게 다시 시작한다.
+    // 진행 중이던 코루틴과 남아있는 Enemy를 정리한 뒤 해당 Wave를 새로 스폰한다.
+    public void LoadWave(int waveNumber)
+    {
+        StopAllCoroutines();
+
+        foreach (EnemyHealth enemy in FindObjectsByType<EnemyHealth>(FindObjectsSortMode.None))
+        {
+            Destroy(enemy.gameObject);
+        }
+
+        aliveEnemies = 0;
+        spawning = false;
+        advancing = false;
+        currentWaveIndex = Mathf.Clamp(waveNumber - 1, 0, Mathf.Max(0, waves.Length - 1));
+
         StartNextWave();
     }
 
@@ -40,6 +49,7 @@ public class WaveManager : MonoBehaviour
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("[WaveManager] All waves cleared");
+            OnAllWavesCleared?.Invoke();
             return;
         }
 
@@ -48,11 +58,11 @@ public class WaveManager : MonoBehaviour
         currentWaveIndex++;
     }
 
-    private IEnumerator SpawnWaveRoutine(Wave wave)
+    private IEnumerator SpawnWaveRoutine(WaveData wave)
     {
         spawning = true;
 
-        foreach (EnemySpawn spawn in wave.spawns)
+        foreach (WaveData.EnemySpawn spawn in wave.spawns)
         {
             for (int i = 0; i < spawn.count; i++)
             {

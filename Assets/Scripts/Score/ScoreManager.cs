@@ -10,4 +10,10 @@ public class ScoreManager : MonoBehaviour
     {
         currentScore += amount;
     }
+
+    // Load 시 저장된 점수를 복구한다.
+    public void SetScore(int score)
+    {
+        currentScore = score;
+    }
 }
