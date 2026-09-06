@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a330a2393e4b6a142b2f55fa2adf096a, type: 3}
-  m_Name: GoblinData
+  m_Name: TankEnemyData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Goblin
-  maxHp: 30
-  moveSpeed: 3
-  attackDamage: 10
+  enemyName: Tank
+  maxHp: 100
+  moveSpeed: 1
+  attackDamage: 20
   attackRange: 1
-  attackCooldown: 1
-  score: 100
+  attackCooldown: 1.5
+  score: 300
+  visualScale: 1.5
+  visualColor: {r: 1, g: 0, b: 0, a: 1}

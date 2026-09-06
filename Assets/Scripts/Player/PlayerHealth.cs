@@ -18,6 +18,10 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHp -= damage;
 
+        // ===== [임시 진단 로그] 원인 확인 후 삭제 =====
+        Debug.Log($"Player HP: {currentHp} / {MaxHp}");
+        // ===========================================
+
         if (currentHp <= 0)
         {
             Die();

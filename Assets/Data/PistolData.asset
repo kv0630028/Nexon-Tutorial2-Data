@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50fd8c4b667b3564f8ae9f50a856f1c2, type: 3}
   m_Name: PistolData
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: 
-  damage: 10
-  fireCooldown: 0.3
+  weaponName: Pistol
+  damage: 15
+  fireCooldown: 0.35
   projectilesPerShot: 1
   spreadAngle: 0
-  bulletSpeed: 12
-  bulletLifetime: 2
+  bulletSpeed: 14
+  bulletLifetime: 2.5

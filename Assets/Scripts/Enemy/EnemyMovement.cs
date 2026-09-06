@@ -9,6 +9,12 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D enemyRb;
     private Transform playerTransform;
 
+    // WaveManager가 공통 프리팹으로 스폰할 때 데이터를 주입한다.
+    public void SetData(EnemyData data)
+    {
+        enemyData = data;
+    }
+
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody2D>();
